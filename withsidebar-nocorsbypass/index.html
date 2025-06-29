@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Ảnh Anime - pic.re Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-gray-900 text-white font-sans min-h-screen flex overflow-hidden">
+
+  <!-- Sidebar trái -->
+  <aside id="sidebar"
+    class="w-64 bg-gray-800 p-4 flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-in-out">
+    <div>
+      <h2 class="text-xl font-bold mb-4">🎯 Tags</h2>
+      <div id="tagContainer" class="h-96 overflow-y-auto space-y-1 pr-1"></div>
+    </div>
+
+    <div class="mt-4 space-y-2">
+      <button onclick="fetchAnime()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">🎲 Lấy ảnh</button>
+      <button onclick="clearViewer()"
+        class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded">🧹 Clear</button>
+    </div>
+
+    <div id="timeDisplay" class="mt-4 text-center text-sm font-mono text-white"></div>
+  </aside>
+
+  <main class="flex-1 p-6 overflow-auto text-center relative">
+
+    <button id="toggleSidebarBtn" class="absolute top-4 left-4 z-20 text-white hover:text-blue-400 md:hidden">
+      <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M3 5h14a1 1 0 000-2H3a1 1 0 000 2zm0 6h14a1 1 0 000-2H3a1 1 0 000 2zm14 4H3a1 1 0 000 2h14a1 1 0 000-2z"
+          clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <h1 class="text-3xl font-bold mb-6 mt-2">📸 Ảnh Anime Ngẫu Nhiên từ <code>pic.re</code></h1>
+
+    <div id="imageContainer" class="relative mb-6 flex flex-col items-center max-w-full">
+      <img id="animeImage" src="" alt="Ảnh anime" class="hidden max-w-full max-h-[80vh] rounded-lg shadow-xl" />
+      <button id="downloadBtn"
+        class="absolute top-2 right-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded shadow hidden">⬇️</button>
+      <div id="info" class="hidden mt-4 text-left text-base bg-gray-800 p-4 rounded-lg shadow w-full max-w-3xl"></div>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
