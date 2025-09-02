@@ -2,6 +2,10 @@ const image = document.getElementById("animeImage");
 const infoBox = document.getElementById("info");
 const downloadBtn = document.getElementById("downloadBtn");
 
+// history
+let history = [];
+let currentIndex = -1;
+
 async function fetchAnime() {
   image.classList.add("hidden");
   infoBox.classList.add("hidden");
@@ -46,6 +50,11 @@ async function fetchAnime() {
     };
 
     image.src = fileUrl;
+
+    // lưu vào history
+    history.push({ url: fileUrl, data });
+    currentIndex = history.length - 1;
+
   } catch (err) {
     console.error("Lỗi khi fetch:", err);
     image.src = "";
@@ -61,4 +70,42 @@ function clearViewer() {
   infoBox.innerHTML = "";
   infoBox.classList.add("hidden");
   downloadBtn.classList.add("hidden");
+  history = [];
+  currentIndex = -1;
+}
+
+function prevImage() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    showFromHistory();
+  }
+}
+
+function nextImage() {
+  if (currentIndex < history.length - 1) {
+    currentIndex++;
+    showFromHistory();
+  }
+}
+
+function showFromHistory() {
+  const { url, data } = history[currentIndex];
+  image.src = url;
+  image.classList.remove("hidden");
+  downloadBtn.classList.remove("hidden");
+
+  downloadBtn.onclick = () => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "anime.jpg";
+    a.click();
+  };
+
+  infoBox.innerHTML = `
+    <p class="text-lg"><strong>Tác giả:</strong> ${data.author}</p>
+    <p class="text-lg"><strong>Gốc:</strong> <a class="text-blue-400 underline" href="${data.source}" target="_blank">Pixiv</a></p>
+    <p class="text-lg"><strong>Kích thước:</strong> ${data.width} × ${data.height}px</p>
+    <p class="text-lg"><strong>Tags:</strong> ${data.tags.slice(0, 10).join(", ")}${data.tags.length > 10 ? ", ..." : ""}</p>
+  `;
+  infoBox.classList.remove("hidden");
 }
